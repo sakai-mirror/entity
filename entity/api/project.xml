@@ -2,7 +2,7 @@
 
 <project>
 	<pomVersion>3</pomVersion>
-	<extend>../../master/project.xml</extend>
+	<extend>../../../master/project.xml</extend>
 	<name>sakai-entity-api</name>
 	<groupId>sakaiproject</groupId>
 	<id>sakai-entity-api</id>
