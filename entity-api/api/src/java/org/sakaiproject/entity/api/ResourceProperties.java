@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Stack;
 
+import org.sakaiproject.time.api.Time;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -243,7 +244,7 @@ public interface ResourceProperties extends Serializable
 	 * @exception EntityPropertyTypeException
 	 *            if the property is found but not a Time.
 	 */
-	// TODO: -ggolden Time getTimeProperty(String name) throws EntityPropertyNotDefinedException, EntityPropertyTypeException;
+	Time getTimeProperty(String name) throws EntityPropertyNotDefinedException, EntityPropertyTypeException;
 
 	/**
 	 * Access a named property as a User.
