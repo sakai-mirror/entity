@@ -4,7 +4,7 @@
 <beans>
 
 	<bean id="org.sakaiproject.entity.api.EntityManager"
-			class="org.sakaiproject.entity.api.EntityManagerComponent"
+			class="org.sakaiproject.entity.impl.EntityManagerComponent"
 			init-method="init"
 			destroy-method="destroy"
 			singleton="true">
