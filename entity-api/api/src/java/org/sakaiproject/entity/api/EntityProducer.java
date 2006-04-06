@@ -183,17 +183,6 @@ public interface EntityProducer
 	Collection getEntityAuthzGroups(Reference ref);
 
 	/**
-	 * Synchronize any entities related to the Site given this change in the Site, possibly a structural change where a tool is added or removed, or the site is new, or being deleted.
-	 * 
-	 * @param site
-	 *        The site that has just changed.
-	 * @param change
-	 *        The ChangeType for the site (newly added, updated, or just removed).
-	 */
-	// TODO: the Site connection -ggolden
-	void syncWithSiteChange(/* Site */Object site, ChangeType change);
-
-	/**
 	 * Get the HttpAccess object that supports entity access via the access servlet for my entities.
 	 * 
 	 * @return The HttpAccess object for my entities, or null if I do not support access.
