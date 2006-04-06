@@ -80,4 +80,13 @@ public interface EntityManager
 	 * @return a new List specially designed to hold References, as a copy of another.
 	 */
 	List newReferenceList(List copyMe);
+
+	/**
+	 * Check for a valid reference.
+	 * 
+	 * @param ref
+	 *        a reference string.
+	 * @return true if the reference is valid, false if not.
+	 */
+	boolean checkReference(String ref);
 }

@@ -100,4 +100,12 @@ public class EntityManager
 
 		return service.newReferenceList(param0);
 	}
+
+	public static boolean checkReference(java.lang.String param0)
+	{
+		org.sakaiproject.entity.api.EntityManager service = getInstance();
+		if (service == null) return false;
+
+		return service.checkReference(param0);
+	}
 }

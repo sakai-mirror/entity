@@ -31,6 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.entity.api.EntityManager;
 import org.sakaiproject.entity.api.EntityProducer;
 import org.sakaiproject.entity.api.Reference;
+import org.sakaiproject.util.Validator;
 
 /**
  * <p>
@@ -129,5 +130,33 @@ public class EntityManagerComponent implements EntityManager
 	public List newReferenceList(List copyMe)
 	{
 		return new ReferenceVectorComponent(copyMe);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public boolean checkReference(String ref)
+	{
+		// the rules:
+		//	Null is rejected
+		//	all blank is rejected
+		//	INVALID_CHARS_IN_RESOURCE_ID characters are rejected
+		
+		Reference r = newReference(ref);
+		
+		// just check the id... %%% need more? -ggolden
+		String id = r.getId();
+
+		if (id == null) return false;
+		if (id.trim().length() == 0) return false;
+
+		// we must reject certain characters that we cannot even escape and get into Tomcat via a URL
+		for (int i = 0; i < id.length(); i++)
+		{
+			if (Validator.INVALID_CHARS_IN_RESOURCE_ID.indexOf(id.charAt(i)) != -1)
+				return false;
+		}
+
+		return true;
 	}
 }
