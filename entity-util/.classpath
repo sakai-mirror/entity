@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/entity-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/user-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/content-api"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

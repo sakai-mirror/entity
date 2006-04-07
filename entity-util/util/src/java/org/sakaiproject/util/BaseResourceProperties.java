@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.content.cover.ContentTypeImageService;
 import org.sakaiproject.entity.api.EntityPropertyNotDefinedException;
 import org.sakaiproject.entity.api.EntityPropertyTypeException;
 import org.sakaiproject.entity.api.ResourceProperties;
@@ -341,8 +342,7 @@ public class BaseResourceProperties implements ResourceProperties
 				// content type
 				else if (name.equals(PROP_CONTENT_TYPE))
 				{
-					// TODO: restore this! return ContentTypeImageService.getContentTypeDisplayName((String) value);
-					return (String) value;
+					return ContentTypeImageService.getContentTypeDisplayName((String) value);
 				}
 			}
 			catch (EntityPropertyNotDefinedException e)
@@ -748,7 +748,6 @@ public class BaseResourceProperties implements ResourceProperties
 	 */
 	public String getNamePropStructObjType()
 	{
-		// TODO Auto-generated method stub
 		return PROP_STRUCTOBJ_TYPE;
 	}
 
