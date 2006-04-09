@@ -28,19 +28,24 @@ package org.sakaiproject.entity.api;
  */
 public class EntityCopyrightException extends Exception
 {
-	private String m_msg = null;
+	private String m_ref = null;
 
 	public EntityCopyrightException()
 	{
 	}
 
-	public EntityCopyrightException(String msg)
+	public EntityCopyrightException(String ref)
 	{
-		m_msg = msg;
+		m_ref = ref;
+	}
+
+	public String getReference()
+	{
+		return m_ref;
 	}
 
 	public String toString()
 	{
-		return super.toString() + ((m_msg != null) ? (" : " + m_msg) : "");
+		return super.toString() + ((m_ref != null) ? (" : " + m_ref) : "");
 	}
 }
