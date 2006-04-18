@@ -75,11 +75,6 @@ public interface EntityProducer
 	boolean willArchiveMerge();
 
 	/**
-	 * @return true if the serice wants to be part of import, false if not.
-	 */
-	boolean willImport();
-
-	/**
 	 * Archive the resources for the given site.
 	 * 
 	 * @param siteId
@@ -113,18 +108,6 @@ public interface EntityProducer
 	 */
 	String merge(String siteId, Element root, String archivePath, String fromSiteId, Map attachmentNames, Map userIdTrans,
 			Set userListAllowImport);
-
-	/**
-	 * import Entites from the source context into the destination context
-	 * 
-	 * @param fromContext
-	 *        The source context
-	 * @param toContext
-	 *        The destination context
-	 * @param ids
-	 *        when null, all entities will be imported; otherwise, only entities with those ids will be imported
-	 */
-	void importEntities(String fromContext, String toContext, List ids);
 
 	/**
 	 * If the service recognizes the reference as its own, parse it and fill in the Reference
