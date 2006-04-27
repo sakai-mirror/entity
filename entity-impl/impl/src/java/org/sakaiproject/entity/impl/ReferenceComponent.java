@@ -386,8 +386,7 @@ public class ReferenceComponent implements Reference
 		for (Iterator iServices = EntityManager.getEntityProducers().iterator(); iServices.hasNext();)
 		{
 			EntityProducer service = (EntityProducer) iServices.next();
-
-			// give each a change to recognize and parse the reference string, filling in this Reference with a call to set()
+			// give each a chance to recognize and parse the reference string, filling in this Reference with a call to set()
 			if (service.parseEntityReference(m_reference, this))
 			{
 				// save the service

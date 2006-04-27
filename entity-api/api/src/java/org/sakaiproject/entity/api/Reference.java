@@ -120,9 +120,9 @@ public interface Reference
 	String getSubType();
 
 	/**
-	 * Access the type, a service id string.
+	 * Access the type, an application id string.  This value must uniquely identify the application responsible for the reference, and must be unchanging over time (it may end up stored in database values).
 	 * 
-	 * @return The type, a service id string.
+	 * @return The type, an application id string.
 	 */
 	String getType();
 
