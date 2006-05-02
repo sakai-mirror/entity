@@ -29,19 +29,34 @@ package org.sakaiproject.entity.api;
 public interface ContextObserver
 {
 	/**
-	 * This is called when a context is being used for this app.
+	 * This is called when a context is first created.
 	 * 
 	 * @param context
-	 *        The context string.
+	 *        The context id.
+	 * @param toolPlacement
+	 *        true if one of your tool is placed in the context.
 	 */
-	void startContext(String context);
+	void contextCreated(String context, boolean toolPlacement);
 
 	/**
-	 * This is called when a context is no longer being used for this app.
+	 * This is called when a context is changed.
 	 * 
 	 * @param context
+	 *        The context id.
+	 * @param toolPlacement
+	 *        true if one of your tool is placed in the context after the change.
 	 */
-	void endContext(String context);
+	void contextUpdated(String context, boolean toolPlacement);
+
+	/**
+	 * This is called when a context is being deleted.
+	 * 
+	 * @param context
+	 *        The context id.
+	 * @param toolPlacement
+	 *        true if one of your tool is placed in the context after the change.
+	 */
+	void contextDeleted(String context, boolean toolPlacment);
 
 	/**
 	 * Provide the string array of tool ids, for tools that we need context preperation for.
