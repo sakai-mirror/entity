@@ -38,33 +38,6 @@ import org.w3c.dom.Element;
 public interface EntityProducer
 {
 	/**
-	 * Indicates types of changes to entities
-	 */
-	public class ChangeType
-	{
-		private String m_id = null;
-
-		private ChangeType(String id)
-		{
-			m_id = id;
-		}
-
-		public String toString()
-		{
-			return m_id;
-		}
-
-		/** Something added. */
-		public static final ChangeType ADD = new ChangeType("add");
-
-		/** Something updated. */
-		public static final ChangeType UPDATE = new ChangeType("update");
-
-		/** Get sites that the current user does not have read access to but are joinable (non-myWorkspace, non-special). */
-		public static final ChangeType REMOVE = new ChangeType("remove");
-	}
-
-	/**
 	 * @return a short string identifying the resources kept here, good for a file name or label.
 	 */
 	String getLabel();
