@@ -134,9 +134,11 @@ public interface EntityProducer
 	 * 
 	 * @param ref
 	 *        The entity reference.
+	 * @param userId
+	 *        The userId for a user-specific set of groups, or null for the generic set.
 	 * @return The entity's collection of authorization group ids, or null if this cannot be done.
 	 */
-	Collection getEntityAuthzGroups(Reference ref);
+	Collection getEntityAuthzGroups(Reference ref, String userId);
 
 	/**
 	 * Get the HttpAccess object that supports entity access via the access servlet for my entities.

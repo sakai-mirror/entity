@@ -103,7 +103,16 @@ public interface Reference
 	 * 
 	 * @return List of AuthzGroup ids (String) associated with this referenced resource.
 	 */
-	Collection getRealms();
+	Collection getAuthzGroups();
+
+	/**
+	 * Compute the set of AuthzGroup ids associated with this referenced resource, perhaps customized for security about this end user.
+	 * 
+	 * @param userId
+	 *        the end user ID, or null if we want the generic set.
+	 * @return List of AuthzGroup ids (String) associated with this referenced resource.
+	 */
+	Collection getAuthzGroups(String userId);
 
 	/**
 	 * Access the reference.

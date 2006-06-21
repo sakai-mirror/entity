@@ -250,17 +250,23 @@ public class ReferenceComponent implements Reference
 	}
 
 	/**
-	 * Compute the set of AuthzGroup ids associated with this referenced resource.
-	 * 
-	 * @return List of AuthzGroup ids (String) associated with this referenced resource.
+	 * {@inheritDoc}
 	 */
-	public Collection getRealms()
+	public Collection getAuthzGroups()
+	{
+		return getAuthzGroups(null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAuthzGroups(String userId)
 	{
 		Collection realms = null;
 
 		if (m_service != null)
 		{
-			realms = m_service.getEntityAuthzGroups(this);
+			realms = m_service.getEntityAuthzGroups(this, userId);
 		}
 
 		if (realms == null) realms = new Vector();
