@@ -824,7 +824,7 @@ public class BaseResourceProperties implements ResourceProperties
 		for (Iterator iNames = other.getPropertyNames(); iNames.hasNext();)
 		{
 			String name = (String) iNames.next();
-			Object value = ((BaseResourceProperties) other).m_props.get(name);
+			Object value = other.getProperty(name);
 			if (value instanceof List)
 			{
 				List list = new Vector();
