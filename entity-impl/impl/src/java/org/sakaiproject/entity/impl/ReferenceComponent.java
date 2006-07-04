@@ -282,9 +282,12 @@ public class ReferenceComponent implements Reference
 	 */
 	public void addSiteContextAuthzGroup(Collection rv)
 	{
+		String context = getContext();
+		if (context == null) return;
+
 		// site using context as id
 		// TODO: taken from site -ggolden was: rv.add(SiteService.siteReference(getContext()));
-		rv.add("/site/" + getContext());
+		rv.add("/site/" + context);
 
 		// site helper
 		rv.add("!site.helper");
