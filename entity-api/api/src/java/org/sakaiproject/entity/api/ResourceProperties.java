@@ -164,6 +164,12 @@ public interface ResourceProperties extends Serializable
 	/** Used to find non structured object ContentResources (files, url's, etc.) */
 	static final String FILE_TYPE = "fileResource";
 
+	/** Property name on a ContentEntity indicating its rank if a custom priority sort is used. */
+	static final String PROP_CONTENT_PRIORITY = "SAKAI:content_priority";
+
+	/** Property name on a ContentCollection indicating that a custom priority sort is to be used. */
+	public static final String PROP_HAS_CUSTOM_SORT = "SAKAI:has_custom_sort";
+
 	/**
 	 * Access an iterator on the names of the defined properties (Strings).
 	 * 
