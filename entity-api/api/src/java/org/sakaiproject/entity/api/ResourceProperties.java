@@ -196,6 +196,15 @@ public interface ResourceProperties extends Serializable
 	List getPropertyList(String name);
 
 	/**
+	 * Access a named property; as a String if it's single valued, or a List of (String) if it's multi-valued (or null if it's not defined).
+	 * 
+	 * @param name
+	 *        The property name.
+	 * @return the property value, or null if not found.
+	 */
+	Object get(String name);
+
+	/**
 	 * Access a named property as a properly formatted string.
 	 * 
 	 * @param name

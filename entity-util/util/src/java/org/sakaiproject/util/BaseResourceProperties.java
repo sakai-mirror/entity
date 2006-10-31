@@ -234,6 +234,14 @@ public class BaseResourceProperties implements ResourceProperties
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public Object get(String name)
+	{
+		return m_props.get(name);
+	}
+
+	/**
 	 * Access a named property as a List of (String), good for single or multi-valued properties.
 	 * 
 	 * @param name
@@ -260,7 +268,6 @@ public class BaseResourceProperties implements ResourceProperties
 		}
 
 		return null;
-
 	}
 
 	/**
@@ -820,20 +827,28 @@ public class BaseResourceProperties implements ResourceProperties
 	 */
 	public void addAll(ResourceProperties other)
 	{
-		// if there's a list, it must be deep copied
 		for (Iterator iNames = other.getPropertyNames(); iNames.hasNext();)
 		{
 			String name = (String) iNames.next();
-			Object value = other.getProperty(name);
-			if (value instanceof List)
+			
+			// use the general accessor for String or List return
+			Object value = other.get(name);
+
+			if (value != null)
 			{
-				List list = new Vector();
-				list.addAll((List) value);
-				m_props.put(name, list);
-			}
-			else
-			{
-				m_props.put(name, value);
+				// Strings are immutable so can be placed directly in
+				if (value instanceof String)
+				{
+					m_props.put(name, value);
+				}
+				
+				// deep copy the list
+				else if (value instanceof List)
+				{
+					List list = new Vector();
+					list.addAll((List) value);
+					m_props.put(name, list);					
+				}
 			}
 		}
 	}
