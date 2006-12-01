@@ -170,6 +170,9 @@ public interface ResourceProperties extends Serializable
 	/** Property name on a ContentCollection indicating that a custom priority sort is to be used. */
 	public static final String PROP_HAS_CUSTOM_SORT = "SAKAI:has_custom_sort";
 
+	/** Property name on a ContentEntity indicating the ResourceType that defines its properties. */
+	static final String PROP_RESOURCE_TYPE = "SAKAI:resource_type";
+
 	/**
 	 * Access an iterator on the names of the defined properties (Strings).
 	 * 
