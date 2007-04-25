@@ -163,6 +163,13 @@ public interface Reference
 	boolean set(String type, String subType, String id, String container, String context);
 
 	/**
+	 * Update the reference string.
+	 *
+	 * @param ref The new reference string.
+	 */
+	void updateReference(String ref);
+	
+	/**
 	 * Access the entity producer responsible for the referenced entity.
 	 * 
 	 * @return The EntityProducer responsible for the referenced entity, or null if there is none.
