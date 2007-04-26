@@ -379,6 +379,14 @@ public class ReferenceComponent implements Reference
 	/**
 	 * @inheritDoc
 	 */
+	public void updateReference(String ref)
+	{
+		m_reference = ref;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public EntityProducer getEntityProducer()
 	{
 		return m_service;
