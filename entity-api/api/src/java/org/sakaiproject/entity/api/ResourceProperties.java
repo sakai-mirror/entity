@@ -536,6 +536,7 @@ public interface ResourceProperties extends Serializable
 	void set(ResourceProperties other);
 
 	/**
+	 * Get a ContentHandler to handle SAX parsing of properties
 	 * @return
 	 */
 	ContentHandler getContentHander();
