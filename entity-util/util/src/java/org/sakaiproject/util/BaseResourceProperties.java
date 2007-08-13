@@ -41,10 +41,15 @@ import org.sakaiproject.time.api.Time;
 import org.sakaiproject.time.cover.TimeService;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.cover.UserDirectoryService;
+import org.sakaiproject.util.commonscodec.CommonsCodecBase64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * <p>
@@ -908,5 +913,82 @@ public class BaseResourceProperties implements ResourceProperties
 	{
 		clear();
 		addAll(props);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sakaiproject.entity.api.ResourceProperties#getContentHander()
+	 */
+	public ContentHandler getContentHander()
+	{
+		return new DefaultHandler()
+		{
+
+			
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
+			 *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+			 */
+			@Override
+			public void startElement(String uri, String localName, String qName,
+					Attributes attributes) throws SAXException
+			{
+
+				if ("property".equals(qName))
+				{
+					
+					String name = attributes.getValue("name");
+					String enc = StringUtil.trimToNull(attributes.getValue("enc"));
+				 	String value = null;
+					if ("BASE64".equalsIgnoreCase(enc))
+					{
+						String charset = StringUtil.trimToNull(attributes.getValue("charset"));
+						if (charset == null) charset = "UTF-8";
+
+						value = Xml.decode(charset,attributes.getValue("value"));
+					}
+					else
+					{
+						value = attributes.getValue("value");
+					}
+						
+					// deal with multiple valued lists
+					if ("list".equals(attributes.getValue("list")))
+					{
+						// accumulate multiple values in a list
+						Object current = m_props.get(name);
+
+						// if we don't have a value yet, make a list to hold
+						// this one
+						if (current == null)
+						{
+							List values = new Vector();
+							m_props.put(name, values);
+							values.add(value);
+						}
+
+						// if we do and it's a list, add this one
+						else if (current instanceof List)
+						{
+							((List) current).add(value);
+						}
+
+						// if it's not a list, it's wrong!
+						else
+						{
+							M_log.warn("construct(el): value set not a list: " + name);
+						}
+					}
+					else
+					{
+						m_props.put(name, value);
+					}
+				}
+			}
+
+		};
 	}
 }
