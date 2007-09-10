@@ -375,7 +375,7 @@ public class BaseResourceProperties implements ResourceProperties, SerializableP
 
 		else if (value instanceof List)
 		{
-			StringBuffer buf = new StringBuffer();
+			StringBuilder buf = new StringBuilder();
 			for (Iterator i = ((List) value).iterator(); i.hasNext();)
 			{
 				String val = (String) i.next();
