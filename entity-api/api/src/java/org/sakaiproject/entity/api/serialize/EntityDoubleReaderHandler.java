@@ -37,6 +37,7 @@ public interface EntityDoubleReaderHandler extends EntityReaderHandler
 	 * @return
 	 * @throws EntityParseException
 	 */
-	Entity parseResource(Entity container, String blob) throws EntityParseException;
+	Entity parse(Entity container, String xml, byte[] blob) throws EntityParseException;
+
 
 }

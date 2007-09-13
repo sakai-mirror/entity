@@ -47,13 +47,6 @@ public interface EntityReader
 	 */
 	EntityReaderHandler getHandler();
 
-	/**
-	 * Should the data be serialized in the new format or default to XML. This
-	 * requires that the setup can read XML.
-	 * 
-	 * @return
-	 */
-	boolean isMigrateData();
 
 
 }

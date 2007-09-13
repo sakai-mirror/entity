@@ -40,23 +40,24 @@ public interface EntitySerializer
 
 	/**
 	 * @param se
-	 * @param serialized
+	 * @param buffer
 	 * @throws EntityParseException
 	 */
-	void parse(SerializableEntity se, String serialized) throws EntityParseException;
+     void parse(SerializableEntity se, byte[] buffer) throws EntityParseException;
 
 	/**
 	 * @param se
 	 * @return
 	 * @throws EntityParseException
 	 */
-	String serialize(SerializableEntity se) throws EntityParseException;
+    byte[] serialize(SerializableEntity se) throws EntityParseException;
 
 	/**
 	 * Return true if this serializer can parse the data
 	 * @param blob
 	 * @return
 	 */
-	boolean accept(String blob);
+	boolean accept(byte[] blob);
+
 
 }

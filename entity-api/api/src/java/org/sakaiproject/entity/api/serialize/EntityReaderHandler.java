@@ -40,14 +40,14 @@ public interface EntityReaderHandler
 	 * @return
 	 * @throws EntityParseException
 	 */
-	String toString(Entity entry) throws EntityParseException;
+	byte[] serialize(Entity entry) throws EntityParseException;
 
 	/**
 	 * @param xml
 	 * @return
 	 * @throws EntityParseException
 	 */
-	Entity parseResource(String blob) throws EntityParseException;
+	Entity parse(String xml, byte[] blob) throws EntityParseException;
 
 	/**
 	 * returns true if the implementation will parse the target
@@ -55,6 +55,6 @@ public interface EntityReaderHandler
 	 * @param xml
 	 * @return
 	 */
-	boolean accept(String blob);
+	boolean accept(byte[] blob);
 
 }
