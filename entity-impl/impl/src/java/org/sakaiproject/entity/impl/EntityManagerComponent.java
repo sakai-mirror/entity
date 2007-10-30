@@ -148,15 +148,18 @@ public class EntityManagerComponent implements EntityManager
 	protected ConcurrentHashMap<String, EntityProducer> m_producersIn = new ConcurrentHashMap<String, EntityProducer>();
 
 	protected ConcurrentHashMap<EntityProducer, Calls> m_performanceIn = new ConcurrentHashMap<EntityProducer, Calls>();
+
+	protected ConcurrentHashMap<String, String> m_rejectRefIn = new ConcurrentHashMap<String, String>();
+
 	protected Map<String, EntityProducer> m_producers = new HashMap<String, EntityProducer>();
 
 	protected Map<EntityProducer, Calls> m_performance = new HashMap<EntityProducer, Calls>();
 
+	private Map<String, String> m_rejectRef = new HashMap<String, String>();
+
 	private int nparse = 0;
 
 	private long total;
-
-	private Map<String, String> rejectRef = new HashMap<String, String>();
 
 	/***************************************************************************
 	 * Constructors, Dependencies and their setter methods
@@ -173,8 +176,11 @@ public class EntityManagerComponent implements EntityManager
 	{
 		try
 		{
-			// library references appear to come through all the time with no resolution
-			rejectRef.put("library", "library");
+			// library references appear to come through all the time with no
+			// resolution
+			m_rejectRefIn.put("library", "library");
+
+			m_rejectRef = new HashMap<String, String>(m_rejectRefIn);
 			M_log.info("init()");
 		}
 		catch (Throwable t)
@@ -212,7 +218,7 @@ public class EntityManagerComponent implements EntityManager
 	{
 		// some services dont provide a reference root, in that case they
 		// get something that will neve match.
-		if (referenceRoot == null || referenceRoot.trim().length() == 0 )
+		if (referenceRoot == null || referenceRoot.trim().length() == 0)
 		{
 			referenceRoot = String.valueOf(System.currentTimeMillis());
 			M_log.warn("Entity Producer does not provide a root reference :" + manager);
@@ -223,9 +229,25 @@ public class EntityManagerComponent implements EntityManager
 		}
 		m_producersIn.put(referenceRoot, manager);
 		m_performanceIn.put(manager, new Calls(manager));
-		
+
 		m_producers = new HashMap<String, EntityProducer>(m_producersIn);
 		m_performance = new HashMap<EntityProducer, Calls>(m_performanceIn);
+	}
+
+	/**
+	 * @param re
+	 */
+	private void addRejectRef(String shortReference)
+	{
+		// some services dont provide a reference root, in that case they
+		// get something that will neve match.
+		if (shortReference == null || shortReference.trim().length() == 0)
+		{
+			return;
+		}
+		m_rejectRefIn.put(shortReference, shortReference);
+		m_rejectRef = new HashMap<String, String>(m_rejectRefIn);
+
 	}
 
 	/**
@@ -291,14 +313,25 @@ public class EntityManagerComponent implements EntityManager
 
 	public EntityProducer getEntityProducer(String reference, Reference target)
 	{
+		if ( M_log.isDebugEnabled() ) {
+			return getEntityProducerWithDebug(reference, target);
+		} else {
+			return getEntityProducerNoDebug(reference, target);		
+		}
+	}
+
+	private final EntityProducer getEntityProducerWithDebug(String reference,
+			Reference target)
+	{
 		nparse++;
 		long start = System.currentTimeMillis();
 		try
 		{
-			if ( reference.trim().length() == 0 ) {
+			if (reference.trim().length() == 0)
+			{
 				return null;
 			}
-			if ( nparse == 1000)
+			if (nparse == 1000)
 			{
 				long t = total;
 				double rate = (1.0 * t) / (1.0 * nparse);
@@ -315,8 +348,7 @@ public class EntityManagerComponent implements EntityManager
 				}
 				M_log.debug("EntityManager Montor " + sb.toString());
 				M_log.info("EntityManager Montor Average " + rate + " ms per parse");
-			} 
-			
+			}
 
 			String ref = reference;
 			int n = ref.indexOf('/', 1);
@@ -331,7 +363,8 @@ public class EntityManagerComponent implements EntityManager
 					ref = ref.substring(0, n);
 				}
 			}
-			if ( rejectRef.get(ref) != null ) {
+			if (m_rejectRef.get(ref) != null)
+			{
 				return null;
 			}
 			EntityProducer ep = m_producers.get(ref);
@@ -352,7 +385,7 @@ public class EntityManagerComponent implements EntityManager
 					c.lookupEnd();
 				}
 			}
-			M_log.info("Entity Scan for "+ref+" for "+reference);
+			M_log.info("Entity Scan for " + ref + " for " + reference);
 			for (Iterator<EntityProducer> iServices = m_producers.values().iterator(); iServices
 					.hasNext();)
 			{
@@ -372,12 +405,71 @@ public class EntityManagerComponent implements EntityManager
 					c.iterateEnd();
 				}
 			}
-			M_log.info("Nothing Found for "+ref+" for "+reference);
+			M_log.info("Nothing Found for  " + ref + " for " + reference + " adding "
+					+ ref + " to the reject list");
+			Exception e = new Exception("Traceback");
+			M_log.info("Traceback ", e);
+			addRejectRef(ref);
 			return null;
 		}
 		finally
 		{
 			total += (System.currentTimeMillis() - start);
 		}
+
+	}
+
+	private final EntityProducer getEntityProducerNoDebug(String reference,
+			Reference target)
+	{
+		if (reference.trim().length() == 0)
+		{
+			return null;
+		}
+		String ref = reference;
+		int n = ref.indexOf('/', 1);
+		if (n > 0)
+		{
+			if (ref.charAt(0) == '/')
+			{
+				ref = ref.substring(1, n);
+			}
+			else
+			{
+				ref = ref.substring(0, n);
+			}
+		}
+		if (m_rejectRef.get(ref) != null)
+		{
+			return null;
+		}
+		EntityProducer ep = m_producers.get(ref);
+		if (ep != null)
+		{
+			if (ep.parseEntityReference(reference, target))
+			{
+				return ep;
+			}
+		}
+		for (Iterator<EntityProducer> iServices = m_producers.values().iterator(); iServices
+				.hasNext();)
+		{
+			EntityProducer service = iServices.next();
+			Calls c = m_performance.get(service);
+			c.iterateStart();
+			try
+			{
+				if (service.parseEntityReference(reference, target))
+				{
+					c.iterateMatch();
+					return service;
+				}
+			}
+			finally
+			{
+				c.iterateEnd();
+			}
+		}
+		return null;
 	}
 }
