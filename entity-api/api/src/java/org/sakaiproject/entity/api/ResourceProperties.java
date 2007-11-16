@@ -30,6 +30,7 @@ import java.util.Stack;
 import org.sakaiproject.time.api.Time;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.ContentHandler;
 
 /**
  * <p>
@@ -533,4 +534,9 @@ public interface ResourceProperties extends Serializable
 	 *        The ResourceProperties object to take values from.
 	 */
 	void set(ResourceProperties other);
+
+	/**
+	 * @return
+	 */
+	ContentHandler getContentHander();
 }
