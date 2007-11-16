@@ -22,7 +22,6 @@
 package org.sakaiproject.entity.impl;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Vector;
 
 import org.sakaiproject.entity.api.Entity;
@@ -33,7 +32,7 @@ import org.sakaiproject.entity.api.Reference;
  * ReferenceVectorComponent implements the ReferenceVector API.
  * </p>
  */
-public class ReferenceVectorComponent extends Vector
+public class ReferenceVectorComponent extends Vector<Reference>
 {
 	/**
 	 * Constructor.
@@ -54,7 +53,7 @@ public class ReferenceVectorComponent extends Vector
 	/**
 	 * Constructor.
 	 */
-	public ReferenceVectorComponent(Collection c)
+	public ReferenceVectorComponent(Collection<Reference> c)
 	{
 		super(c);
 	}
@@ -92,10 +91,8 @@ public class ReferenceVectorComponent extends Vector
 				ref = ((Reference) o).getReference();
 			}
 
-			Iterator it = iterator();
-			while (it.hasNext())
+			for (Reference de: this)
 			{
-				Reference de = (Reference) it.next();
 				if (de.getReference().equals(ref)) return true;
 			}
 
@@ -117,10 +114,8 @@ public class ReferenceVectorComponent extends Vector
 		if (o instanceof String)
 		{
 			String ref = (String) o;
-			Iterator it = iterator();
-			while (it.hasNext())
+			for (Reference de: this)
 			{
-				Reference de = (Reference) it.next();
 				if (de.getReference().equals(ref))
 				{
 					return super.remove(de);

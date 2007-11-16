@@ -203,9 +203,9 @@ public class EntityManagerComponent implements EntityManager
 	/**
 	 * @inheritDoc
 	 */
-	public List getEntityProducers()
+	public List<EntityProducer> getEntityProducers()
 	{
-		List rv = new ArrayList<EntityProducer>();
+		List<EntityProducer> rv = new ArrayList<EntityProducer>();
 		rv.addAll(m_producers.values());
 
 		return rv;
@@ -269,7 +269,7 @@ public class EntityManagerComponent implements EntityManager
 	/**
 	 * @inheritDoc
 	 */
-	public List newReferenceList()
+	public List<Reference> newReferenceList()
 	{
 		return new ReferenceVectorComponent();
 	}
@@ -277,7 +277,7 @@ public class EntityManagerComponent implements EntityManager
 	/**
 	 * @inheritDoc
 	 */
-	public List newReferenceList(List copyMe)
+	public List<Reference> newReferenceList(List<Reference> copyMe)
 	{
 		return new ReferenceVectorComponent(copyMe);
 	}

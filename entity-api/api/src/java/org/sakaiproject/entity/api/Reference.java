@@ -36,7 +36,7 @@ public interface Reference
 	 * @param rv
 	 *        The list.
 	 */
-	void addSiteContextAuthzGroup(Collection rv);
+	void addSiteContextAuthzGroup(Collection<String> rv);
 
 	/**
 	 * Add the AuthzGroup for this user id, or for the user's type template, or for the general template.
@@ -46,7 +46,7 @@ public interface Reference
 	 * @param id
 	 *        The user id.
 	 */
-	void addUserAuthzGroup(Collection rv, String id);
+	void addUserAuthzGroup(Collection<String> rv, String id);
 
 	/**
 	 * Add the AuthzGroup for this user id, or for the user's type template, or for the general template.
@@ -56,7 +56,7 @@ public interface Reference
 	 * @param id
 	 *        The user id.
 	 */
-	void addUserTemplateAuthzGroup(Collection rv, String id);
+	void addUserTemplateAuthzGroup(Collection<String> rv, String id);
 
 	/**
 	 * Access a single container id, the from most general (or only)
@@ -103,7 +103,7 @@ public interface Reference
 	 * 
 	 * @return List of AuthzGroup ids (String) associated with this referenced resource.
 	 */
-	Collection getAuthzGroups();
+	Collection<String> getAuthzGroups();
 
 	/**
 	 * Compute the set of AuthzGroup ids associated with this referenced resource, perhaps customized for security about this end user.
@@ -112,7 +112,7 @@ public interface Reference
 	 *        the end user ID, or null if we want the generic set.
 	 * @return List of AuthzGroup ids (String) associated with this referenced resource.
 	 */
-	Collection getAuthzGroups(String userId);
+	Collection<String> getAuthzGroups(String userId);
 
 	/**
 	 * Access the reference.

@@ -35,7 +35,7 @@ public interface EntityManager
 	 * 
 	 * @return List (EntityProducer) of managers that are registered EntityProducer.
 	 */
-	List getEntityProducers();
+	List<EntityProducer> getEntityProducers();
 
 	/**
 	 * Register this as an EntityProducer.
@@ -47,6 +47,12 @@ public interface EntityManager
 	 */
 	void registerEntityProducer(EntityProducer manager, String referenceRoot);
 
+	
+	/** Return the EntityProducer registered for a particular reference **/
+	
+	EntityProducer getEntityProducer(String reference, Reference target);
+	    
+	
 	/**
 	 * Create a new Reference object, from the given reference string.
 	 * 
@@ -70,7 +76,7 @@ public interface EntityManager
 	 * 
 	 * @return a new List specially designed to hold References.
 	 */
-	List newReferenceList();
+	List<Reference> newReferenceList();
 
 	/**
 	 * Create a new List specially designed to hold References, as a copy of another.
@@ -79,7 +85,7 @@ public interface EntityManager
 	 *        Make the new list contain a copy of this list.
 	 * @return a new List specially designed to hold References, as a copy of another.
 	 */
-	List newReferenceList(List copyMe);
+	List<Reference> newReferenceList(List<Reference> copyMe);
 
 	/**
 	 * Check for a valid reference.

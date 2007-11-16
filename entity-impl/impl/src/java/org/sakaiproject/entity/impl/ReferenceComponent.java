@@ -21,10 +21,8 @@
 
 package org.sakaiproject.entity.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -253,7 +251,7 @@ public class ReferenceComponent implements Reference
 	/**
 	 * {@inheritDoc}
 	 */
-	public Collection getAuthzGroups()
+	public Collection<String> getAuthzGroups()
 	{
 		return getAuthzGroups(null);
 	}
@@ -261,16 +259,16 @@ public class ReferenceComponent implements Reference
 	/**
 	 * {@inheritDoc}
 	 */
-	public Collection getAuthzGroups(String userId)
+	public Collection<String> getAuthzGroups(String userId)
 	{
-		Collection realms = null;
+		Collection<String> realms = null;
 
 		if (m_service != null)
 		{
 			realms = m_service.getEntityAuthzGroups(this, userId);
 		}
 
-		if (realms == null) realms = new Vector();
+		if (realms == null) realms = new ArrayList<String>();
 
 		return realms;
 	}
@@ -281,7 +279,7 @@ public class ReferenceComponent implements Reference
 	 * @param rv
 	 *        The list.
 	 */
-	public void addSiteContextAuthzGroup(Collection rv)
+	public void addSiteContextAuthzGroup(Collection<String> rv)
 	{
 		String context = getContext();
 		if (context == null) return;
@@ -302,7 +300,7 @@ public class ReferenceComponent implements Reference
 	 * @param id
 	 *        The user id.
 	 */
-	public void addUserAuthzGroup(Collection rv, String id)
+	public void addUserAuthzGroup(Collection<String> rv, String id)
 	{
 		if (id == null) id = "";
 
@@ -320,7 +318,7 @@ public class ReferenceComponent implements Reference
 	 * @param id
 	 *        The user id.
 	 */
-	public void addUserTemplateAuthzGroup(Collection rv, String id)
+	public void addUserTemplateAuthzGroup(Collection<String> rv, String id)
 	{
 		if (id == null) id = "";
 
@@ -400,7 +398,7 @@ public class ReferenceComponent implements Reference
 	{
 		if (m_reference == null) return;
 		
-		EntityManagerComponent emanager = (EntityManagerComponent) EntityManager.getInstance();
+		org.sakaiproject.entity.api.EntityManager emanager = EntityManager.getInstance();
 		EntityProducer service = emanager.getEntityProducer(m_reference,this);
 		if ( service != null ) {
 			m_service = service;
