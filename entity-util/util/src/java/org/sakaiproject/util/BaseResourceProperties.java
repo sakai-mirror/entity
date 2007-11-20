@@ -22,9 +22,11 @@
 package org.sakaiproject.util;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.Vector;
@@ -35,6 +37,8 @@ import org.sakaiproject.content.cover.ContentTypeImageService;
 import org.sakaiproject.entity.api.EntityPropertyNotDefinedException;
 import org.sakaiproject.entity.api.EntityPropertyTypeException;
 import org.sakaiproject.entity.api.ResourceProperties;
+import org.sakaiproject.entity.api.serialize.SerializableEntity;
+import org.sakaiproject.entity.api.serialize.SerializablePropertiesAccess;
 import org.sakaiproject.exception.EmptyException;
 import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.time.api.Time;
@@ -56,7 +60,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * BaseResourceProperties is the base class for ResourceProperties implementations.
  * </p>
  */
-public class BaseResourceProperties implements ResourceProperties
+public class BaseResourceProperties implements ResourceProperties, SerializablePropertiesAccess, SerializableEntity
 {
 	/** Our logger. */
 	private static Log M_log = LogFactory.getLog(BaseResourceProperties.class);
@@ -371,7 +375,7 @@ public class BaseResourceProperties implements ResourceProperties
 
 		else if (value instanceof List)
 		{
-			StringBuffer buf = new StringBuffer();
+			StringBuilder buf = new StringBuilder();
 			for (Iterator i = ((List) value).iterator(); i.hasNext();)
 			{
 				String val = (String) i.next();
@@ -990,5 +994,25 @@ public class BaseResourceProperties implements ResourceProperties
 			}
 
 		};
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.entity.api.SerializableProperties#getSerializableProperties()
+	 */
+	public Map<String, Object> getSerializableProperties()
+	{
+		Map<String, Object>  m = new HashMap<String, Object>();
+		m.putAll(m_props);
+		return m;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.entity.api.SerializableProperties#setSerializableProperties(java.util.Map)
+	 */
+	public void setSerializableProperties(Map<String, Object> properties)
+	{
+		m_props.clear();
+		m_props.putAll(properties);
+		
 	}
 }
