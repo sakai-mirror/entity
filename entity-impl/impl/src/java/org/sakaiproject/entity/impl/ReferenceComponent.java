@@ -83,11 +83,12 @@ public class ReferenceComponent implements Reference
 	 * 
 	 * @param ref
 	 *        The resource reference.
+	 * @param entityComponentManager 
 	 */
-	public ReferenceComponent(String ref)
+	public ReferenceComponent(EntityManagerComponent entityManagerComponent, String ref)
 	{
 		m_reference = ref;
-		parse();
+		parse(entityManagerComponent);
 	}
 
 	/**
@@ -396,12 +397,11 @@ public class ReferenceComponent implements Reference
 	/*
 	 * Parse the reference
 	 */
-	protected void parse()
+	protected void parse(EntityManagerComponent entityManagerComponent)
 	{
 		if (m_reference == null) return;
 		
-		EntityManagerComponent emanager = (EntityManagerComponent) EntityManager.getInstance();
-		EntityProducer service = emanager.getEntityProducer(m_reference,this);
+		EntityProducer service = entityManagerComponent.getEntityProducer(m_reference,this);
 		if ( service != null ) {
 			m_service = service;
 			return;
