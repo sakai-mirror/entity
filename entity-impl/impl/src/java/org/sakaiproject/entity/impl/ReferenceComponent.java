@@ -24,7 +24,6 @@ package org.sakaiproject.entity.impl;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -392,19 +391,27 @@ public class ReferenceComponent implements Reference
 	{
 		return m_service;
 	}
-	
+
 	/*
 	 * Parse the reference
 	 */
 	protected void parse()
 	{
 		if (m_reference == null) return;
-		
-		EntityManagerComponent emanager = (EntityManagerComponent) EntityManager.getInstance();
-		EntityProducer service = emanager.getEntityProducer(m_reference,this);
-		if ( service != null ) {
-			m_service = service;
-			return;
+
+		// check with the resource services to see if anyone recognizes this
+		for (Iterator iServices = EntityManager.getEntityProducers().iterator(); iServices.hasNext();)
+		{
+			EntityProducer service = (EntityProducer) iServices.next();
+			// give each a chance to recognize and parse the reference string, filling in this Reference with a call to set()
+			if (service.parseEntityReference(m_reference, this))
+			{
+				// save the service
+				m_service = service;
+
+				// done
+				return;
+			}
 		}
 
 		if (M_log.isDebugEnabled()) M_log.debug("parse(): unhandled reference: " + m_reference);

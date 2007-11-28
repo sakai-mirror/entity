@@ -46,11 +46,6 @@ public interface EntitySummary {
     * @return
     */
    String[] summarizableToolIds();
-   /**
-    * Get a sumerisable reference for the siteId and toolIdentifier
-    * @param siteId
-    * @param toolIdentifier
-    * @return
-    */
-   String getSummarizableReference(String siteId, String toolIdentifier);
+   
+   String getSummarizableReference(String siteId);
 }
