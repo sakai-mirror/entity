@@ -50,6 +50,13 @@ public interface EntityReaderHandler
 	Entity parse(String xml, byte[] blob) throws EntityParseException;
 
 	/**
+	 * @param container
+	 * @param xml
+	 * @return
+	 * @throws EntityParseException
+	 */
+	Entity parse(Entity container, String xml, byte[] blob) throws EntityParseException;
+	/**
 	 * returns true if the implementation will parse the target
 	 * 
 	 * @param xml
