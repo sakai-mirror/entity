@@ -255,7 +255,7 @@ public class EntityManagerComponent implements EntityManager
 	 */
 	public Reference newReference(String refString)
 	{
-		return new ReferenceComponent(refString);
+		return new ReferenceComponent(this,refString);
 	}
 
 	/**
